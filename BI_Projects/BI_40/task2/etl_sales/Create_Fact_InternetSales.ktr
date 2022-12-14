@@ -428,8 +428,8 @@
     <created_user>-</created_user>
     <created_date>2022/12/07 22:37:36.973</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2022/12/08 00:02:26.535</modified_date>
-    <key_for_session_key/>
+    <modified_date>2022/12/14 13:59:49.044</modified_date>
+    <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
   <notepads>
@@ -619,6 +619,402 @@
     </hop>
   </order>
   <step>
+    <name>Create SalesOrderLineNumber</name>
+    <type>Formula</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <formula>
+      <field_name>SalesOrderLineNumber</field_name>
+      <formula_string>"SOL"&amp;[SalesOrderID]&amp;"-"&amp;[SalesOrderDetailID]</formula_string>
+      <value_type>String</value_type>
+      <value_length>50</value_length>
+      <value_precision>-1</value_precision>
+      <replace_field/>
+    </formula>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>928</xloc>
+      <yloc>384</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Creating DueDateKey</name>
+    <type>ScriptValueMod</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <compatible>N</compatible>
+    <optimizationLevel>9</optimizationLevel>
+    <jsScripts>
+      <jsScript>
+        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>var DueDateKey = 10000*year(DueDate) + 100 * (month(DueDate)+1) + getDayNumber(DueDate,'m');
+</jsScript_script>
+      </jsScript>
+    </jsScripts>
+    <fields>
+      <field>
+        <name>DueDateKey</name>
+        <rename>DueDateKey</rename>
+        <type>Integer</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>688</xloc>
+      <yloc>384</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Creating OrderDateKey</name>
+    <type>ScriptValueMod</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <compatible>N</compatible>
+    <optimizationLevel>9</optimizationLevel>
+    <jsScripts>
+      <jsScript>
+        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>var OrderDateKey = 10000*year(OrderDate) + 100 * (month(OrderDate)+1) + getDayNumber(OrderDate,'m');
+</jsScript_script>
+      </jsScript>
+    </jsScripts>
+    <fields>
+      <field>
+        <name>OrderDateKey</name>
+        <rename>OrderDateKey</rename>
+        <type>Integer</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>432</xloc>
+      <yloc>384</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Creating OrderLine variables</name>
+    <type>ScriptValueMod</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <compatible>N</compatible>
+    <optimizationLevel>9</optimizationLevel>
+    <jsScripts>
+      <jsScript>
+        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>var OrderLineTotal = OrderQty * UnitPrice;
+var OrderLineProfit = OrderLineTotal - OrderQty * StandardCost;
+var OrderLineTaxAmt = OrderLineTotal * TaxRate;
+var OrderLineShippingCost = ShipSurcharge + ShipBase + (OrderQty * ShipRate * ShipCoeff);
+</jsScript_script>
+      </jsScript>
+    </jsScripts>
+    <fields>
+      <field>
+        <name>OrderLineTotal</name>
+        <rename>OrderLineTotal</rename>
+        <type>Number</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>
+      <field>
+        <name>OrderLineProfit</name>
+        <rename>OrderLineProfit</rename>
+        <type>Number</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>
+      <field>
+        <name>OrderLineTaxAmt</name>
+        <rename>OrderLineTaxAmt</rename>
+        <type>Number</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>
+      <field>
+        <name>OrderLineShippingCost</name>
+        <rename>OrderLineShippingCost</rename>
+        <type>Number</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1168</xloc>
+      <yloc>384</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Creating ShipDateKey</name>
+    <type>ScriptValueMod</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <compatible>N</compatible>
+    <optimizationLevel>9</optimizationLevel>
+    <jsScripts>
+      <jsScript>
+        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>var ShipDateKey = 10000*year(ShipDate) + 100 * (month(ShipDate)+1) + getDayNumber(ShipDate,'m');
+</jsScript_script>
+      </jsScript>
+    </jsScripts>
+    <fields>
+      <field>
+        <name>ShipDateKey</name>
+        <rename>ShipDateKey</rename>
+        <type>Integer</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>240</xloc>
+      <yloc>384</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Remove redundant fields</name>
+    <type>SelectValues</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fields>
+      <select_unspecified>N</select_unspecified>
+      <remove>
+        <name>TaxRate</name>
+      </remove>
+      <remove>
+        <name>StandardCost</name>
+      </remove>
+      <remove>
+        <name>ShipBase</name>
+      </remove>
+      <remove>
+        <name>ShipCoeff</name>
+      </remove>
+      <remove>
+        <name>ShipRate</name>
+      </remove>
+      <remove>
+        <name>ShipSurcharge</name>
+      </remove>
+      <remove>
+        <name>SalesOrderID</name>
+      </remove>
+      <remove>
+        <name>SalesOrderDetailID</name>
+      </remove>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1168</xloc>
+      <yloc>240</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Rename fields</name>
+    <type>SelectValues</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fields>
+      <field>
+        <name>SalesOrderNumber</name>
+        <rename/>
+      </field>
+      <field>
+        <name>ProductID</name>
+        <rename>ProductKey</rename>
+      </field>
+      <field>
+        <name>OrderQty</name>
+        <rename/>
+      </field>
+      <field>
+        <name>UnitPrice</name>
+        <rename/>
+      </field>
+      <field>
+        <name>OrderDate</name>
+        <rename/>
+      </field>
+      <field>
+        <name>DueDate</name>
+        <rename/>
+      </field>
+      <field>
+        <name>ShipDate</name>
+        <rename/>
+      </field>
+      <field>
+        <name>OrderStatus</name>
+        <rename/>
+      </field>
+      <field>
+        <name>ShipMethod</name>
+        <rename/>
+      </field>
+      <field>
+        <name>ShipToLocationKey</name>
+        <rename/>
+      </field>
+      <field>
+        <name>CustomerKey</name>
+        <rename/>
+      </field>
+      <field>
+        <name>ShipDateKey</name>
+        <rename/>
+      </field>
+      <field>
+        <name>OrderDateKey</name>
+        <rename/>
+      </field>
+      <field>
+        <name>DueDateKey</name>
+        <rename/>
+      </field>
+      <field>
+        <name>SalesOrderLineNumber</name>
+        <rename/>
+      </field>
+      <field>
+        <name>OrderLineTotal</name>
+        <rename/>
+      </field>
+      <field>
+        <name>OrderLineProfit</name>
+        <rename/>
+      </field>
+      <field>
+        <name>OrderLineTaxAmt</name>
+        <rename/>
+      </field>
+      <field>
+        <name>OrderLineShippingCost</name>
+        <rename/>
+      </field>
+      <select_unspecified>N</select_unspecified>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1168</xloc>
+      <yloc>128</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
     <name>Table input</name>
     <type>TableInput</type>
     <description/>
@@ -640,8 +1036,8 @@
 , soh.OrderDate
 , soh.DueDate
 , soh.ShipDate
-, os.OrderStatusName
-, sm.ShipMethodName
+, os.OrderStatusName as OrderStatus
+, sm.ShipMethodName as ShipMethod
 , addr.CountryID as ShipToLocationKey
 , soh.CustomerID as CustomerKey
 , country.TaxRate
@@ -893,11 +1289,11 @@ ON psc.ProductTopCategoryID = ptc.ProductTopCategoryID
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>OrderStatusName</name>
+        <name>OrderStatus</name>
         <length>50</length>
         <precision>-1</precision>
         <origin>Table input</origin>
-        <comments>OrderStatusName</comments>
+        <comments>OrderStatus</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -916,11 +1312,11 @@ ON psc.ProductTopCategoryID = ptc.ProductTopCategoryID
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>ShipMethodName</name>
+        <name>ShipMethod</name>
         <length>50</length>
         <precision>-1</precision>
         <origin>Table input</origin>
-        <comments>ShipMethodName</comments>
+        <comments>ShipMethod</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1132,402 +1528,6 @@ ON psc.ProductTopCategoryID = ptc.ProductTopCategoryID
     <GUI>
       <xloc>96</xloc>
       <yloc>384</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Creating ShipDateKey</name>
-    <type>ScriptValueMod</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <compatible>N</compatible>
-    <optimizationLevel>9</optimizationLevel>
-    <jsScripts>
-      <jsScript>
-        <jsScript_type>0</jsScript_type>
-        <jsScript_name>Script 1</jsScript_name>
-        <jsScript_script>var ShipDateKey = 10000*year(ShipDate) + 100 * (month(ShipDate)+1) + getDayNumber(ShipDate,'m');
-</jsScript_script>
-      </jsScript>
-    </jsScripts>
-    <fields>
-      <field>
-        <name>ShipDateKey</name>
-        <rename>ShipDateKey</rename>
-        <type>Integer</type>
-        <length>-1</length>
-        <precision>-1</precision>
-        <replace>N</replace>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>240</xloc>
-      <yloc>384</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Creating OrderDateKey</name>
-    <type>ScriptValueMod</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <compatible>N</compatible>
-    <optimizationLevel>9</optimizationLevel>
-    <jsScripts>
-      <jsScript>
-        <jsScript_type>0</jsScript_type>
-        <jsScript_name>Script 1</jsScript_name>
-        <jsScript_script>var OrderDateKey = 10000*year(OrderDate) + 100 * (month(OrderDate)+1) + getDayNumber(OrderDate,'m');
-</jsScript_script>
-      </jsScript>
-    </jsScripts>
-    <fields>
-      <field>
-        <name>OrderDateKey</name>
-        <rename>OrderDateKey</rename>
-        <type>Integer</type>
-        <length>-1</length>
-        <precision>-1</precision>
-        <replace>N</replace>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>432</xloc>
-      <yloc>384</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Creating DueDateKey</name>
-    <type>ScriptValueMod</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <compatible>N</compatible>
-    <optimizationLevel>9</optimizationLevel>
-    <jsScripts>
-      <jsScript>
-        <jsScript_type>0</jsScript_type>
-        <jsScript_name>Script 1</jsScript_name>
-        <jsScript_script>var DueDateKey = 10000*year(DueDate) + 100 * (month(DueDate)+1) + getDayNumber(DueDate,'m');
-</jsScript_script>
-      </jsScript>
-    </jsScripts>
-    <fields>
-      <field>
-        <name>DueDateKey</name>
-        <rename>DueDateKey</rename>
-        <type>Integer</type>
-        <length>-1</length>
-        <precision>-1</precision>
-        <replace>N</replace>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>688</xloc>
-      <yloc>384</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Create SalesOrderLineNumber</name>
-    <type>Formula</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <formula>
-      <field_name>SalesOrderLineNumber</field_name>
-      <formula_string>"SOL"&amp;[SalesOrderID]&amp;"-"&amp;[SalesOrderDetailID]</formula_string>
-      <value_type>String</value_type>
-      <value_length>50</value_length>
-      <value_precision>-1</value_precision>
-      <replace_field/>
-    </formula>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>928</xloc>
-      <yloc>384</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Creating OrderLine variables</name>
-    <type>ScriptValueMod</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <compatible>N</compatible>
-    <optimizationLevel>9</optimizationLevel>
-    <jsScripts>
-      <jsScript>
-        <jsScript_type>0</jsScript_type>
-        <jsScript_name>Script 1</jsScript_name>
-        <jsScript_script>var OrderLineTotal = OrderQty * UnitPrice;
-var OrderLineProfit = OrderLineTotal - OrderQty * StandardCost;
-var OrderLineTaxAmt = OrderLineTotal * TaxRate;
-var OrderLineShippingCost = ShipSurcharge + ShipBase + (OrderQty * ShipRate * ShipCoeff);
-</jsScript_script>
-      </jsScript>
-    </jsScripts>
-    <fields>
-      <field>
-        <name>OrderLineTotal</name>
-        <rename>OrderLineTotal</rename>
-        <type>Number</type>
-        <length>-1</length>
-        <precision>-1</precision>
-        <replace>N</replace>
-      </field>
-      <field>
-        <name>OrderLineProfit</name>
-        <rename>OrderLineProfit</rename>
-        <type>Number</type>
-        <length>-1</length>
-        <precision>-1</precision>
-        <replace>N</replace>
-      </field>
-      <field>
-        <name>OrderLineTaxAmt</name>
-        <rename>OrderLineTaxAmt</rename>
-        <type>Number</type>
-        <length>-1</length>
-        <precision>-1</precision>
-        <replace>N</replace>
-      </field>
-      <field>
-        <name>OrderLineShippingCost</name>
-        <rename>OrderLineShippingCost</rename>
-        <type>Number</type>
-        <length>-1</length>
-        <precision>-1</precision>
-        <replace>N</replace>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1168</xloc>
-      <yloc>384</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Remove redundant fields</name>
-    <type>SelectValues</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <fields>
-      <select_unspecified>N</select_unspecified>
-      <remove>
-        <name>TaxRate</name>
-      </remove>
-      <remove>
-        <name>StandardCost</name>
-      </remove>
-      <remove>
-        <name>ShipBase</name>
-      </remove>
-      <remove>
-        <name>ShipCoeff</name>
-      </remove>
-      <remove>
-        <name>ShipRate</name>
-      </remove>
-      <remove>
-        <name>ShipSurcharge</name>
-      </remove>
-      <remove>
-        <name>SalesOrderID</name>
-      </remove>
-      <remove>
-        <name>SalesOrderDetailID</name>
-      </remove>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1168</xloc>
-      <yloc>240</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Rename fields</name>
-    <type>SelectValues</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <fields>
-      <field>
-        <name>SalesOrderNumber</name>
-        <rename/>
-      </field>
-      <field>
-        <name>ProductID</name>
-        <rename>ProductKey</rename>
-      </field>
-      <field>
-        <name>OrderQty</name>
-        <rename/>
-      </field>
-      <field>
-        <name>UnitPrice</name>
-        <rename/>
-      </field>
-      <field>
-        <name>OrderDate</name>
-        <rename/>
-      </field>
-      <field>
-        <name>DueDate</name>
-        <rename/>
-      </field>
-      <field>
-        <name>ShipDate</name>
-        <rename/>
-      </field>
-      <field>
-        <name>OrderStatusName</name>
-        <rename/>
-      </field>
-      <field>
-        <name>ShipMethodName</name>
-        <rename/>
-      </field>
-      <field>
-        <name>ShipToLocationKey</name>
-        <rename/>
-      </field>
-      <field>
-        <name>CustomerKey</name>
-        <rename/>
-      </field>
-      <field>
-        <name>ShipDateKey</name>
-        <rename/>
-      </field>
-      <field>
-        <name>OrderDateKey</name>
-        <rename/>
-      </field>
-      <field>
-        <name>DueDateKey</name>
-        <rename/>
-      </field>
-      <field>
-        <name>SalesOrderLineNumber</name>
-        <rename/>
-      </field>
-      <field>
-        <name>OrderLineTotal</name>
-        <rename/>
-      </field>
-      <field>
-        <name>OrderLineProfit</name>
-        <rename/>
-      </field>
-      <field>
-        <name>OrderLineTaxAmt</name>
-        <rename/>
-      </field>
-      <field>
-        <name>OrderLineShippingCost</name>
-        <rename/>
-      </field>
-      <select_unspecified>N</select_unspecified>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1168</xloc>
-      <yloc>128</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
