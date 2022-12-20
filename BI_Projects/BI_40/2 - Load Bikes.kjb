@@ -12,7 +12,7 @@
   <parameters>
     <parameter>
       <name>MyPath</name>
-      <default_value/>
+      <default_value>C:\</default_value>
       <description/>
     </parameter>
   </parameters>
