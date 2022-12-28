@@ -77,7 +77,6 @@ SELECT
 WHERE rankInCategory <= 3;
 
 /* 3.7 */
-/* TODO: CHECK RESULTS AGAIN */
 SELECT 
 	loc.Country, 
 	ROUND(SUM(facts.OrderLineProfit), 2) AS 'Profit'

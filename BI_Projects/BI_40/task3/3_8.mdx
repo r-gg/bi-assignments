@@ -1,0 +1,15 @@
+WITH MEMBER [Measures].[Tax Amount] AS 
+    'Round([Measures].[TaxAmount], 2)' 
+
+SELECT { [Measures].[Tax Amount] } ON COLUMNS,
+{
+[OrderDate].[2021].[1],
+[OrderDate].[2021].[2],
+[OrderDate].[2021].[3],
+[OrderDate].[2021].[4],
+[OrderDate].[2021].[5],
+[OrderDate].[2021].[6]
+} ON ROWS,
+{[ShippedTo].[Country].[France],
+[ShippedTo].[Country].[Germany]} ON PAGES
+FROM bike_sales
