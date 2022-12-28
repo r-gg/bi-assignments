@@ -1,0 +1,12 @@
+with 
+member [Measures].[CoalescedProfit] as
+CoalesceEmpty([Measures].[Profit],0)
+
+SELECT { [Measures].[CoalescedProfit] } ON COLUMNS,
+Order(
+[Product].[TopCategory].Members,
+[Measures].[CoalescedProfit],
+DESC
+) ON ROWS
+FROM bike_sales
+WHERE [OrderDate].[2021]
