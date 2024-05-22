@@ -8,9 +8,8 @@ Tools used: Pentaho data integration, Pentaho schema workbench, MySQL
 
 ## Assignment 3: Data Analytics
 
-The goal of this assignment was to solve a data analytics problem following the CRISP-DM
-Process.
+Udemy aims to identify the key characteristics of the most popular IT courses, such as popular titles, average rating, rating count, and price, that appeal to its customers to improve the course portfolio and enhance student retention. Course creators are interested in the potential revenue of their course. Thus, we want to predict the number of subscribers to be able to estimate revenues.
 
 Udemy IT Courses dataset was used for this assignment. (https://www.kaggle.com/datasets/jilkothari/it-software-courses-udemy-22k-courses)
 
-Tools used: Jupyter Notebooks with focus on sklearn library.
+Tools used: Jupyter Notebooks with focus on numpz, pandas and sklearn libraries.
